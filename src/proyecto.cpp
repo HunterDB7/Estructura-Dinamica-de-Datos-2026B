@@ -23,3 +23,37 @@ struct Node {
     Node* left;
     Node* right;
 };
+
+// Cola personalizada para no usar std::vector ni std::queue (Regla del proyecto)
+struct QueueNode {
+    Node* treeNode;
+    QueueNode* next;
+};
+
+struct CustomQueue {
+    QueueNode* front;
+    QueueNode* rear;
+    CustomQueue() : front(nullptr), rear(nullptr) {}
+
+    void push(Node* node) {
+        QueueNode* qNode = new QueueNode{node, nullptr};
+        if (!rear) {
+            front = rear = qNode;
+            return;
+        }
+        rear->next = qNode;
+        rear = qNode;
+    }
+
+    Node* pop() {
+        if (!front) return nullptr;
+        QueueNode* temp = front;
+        Node* res = temp->treeNode;
+        front = front->next;
+        if (!front) rear = nullptr;
+        delete temp;
+        return res;
+    }
+
+    bool isEmpty() { return front == nullptr; }
+};
