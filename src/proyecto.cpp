@@ -70,3 +70,52 @@ char parseGender(string s) {
     if (s == "Female") return 'M'; // Mujer
     return 'H'; // Hombre por defecto para Male u otros
 }
+// ==========================================
+// 3. OPERACIONES DEL ÁRBOL
+// ==========================================
+
+// Busca un nodo por su ID
+Node* findNode(Node* root, string target_id) {
+    if (!root) return nullptr;
+    if (root->id == target_id) return root;
+    Node* leftSearch = findNode(root->left, target_id);
+    if (leftSearch) return leftSearch;
+    return findNode(root->right, target_id);
+}
+
+// Inserción en el árbol: Busca al jefe, si no lo encuentra o ya tiene 2 hijos, inserta por nivel.
+void insertNode(Node*& root, Node* newNode) {
+    if (!root) {
+        root = newNode;
+        return;
+    }
+
+    Node* boss = findNode(root, newNode->id_boss);
+    if (boss) {
+        if (!boss->left) {
+            boss->left = newNode;
+            return;
+        } else if (!boss->right) {
+            boss->right = newNode;
+            return;
+        }
+    }
+    
+    CustomQueue q;
+    q.push(root);
+    while (!q.isEmpty()) {
+        Node* curr = q.pop();
+        if (!curr->left) {
+            curr->left = newNode;
+            break;
+        } else {
+            q.push(curr->left);
+        }
+        if (!curr->right) {
+            curr->right = newNode;
+            break;
+        } else {
+            q.push(curr->right);
+        }
+    }
+}
