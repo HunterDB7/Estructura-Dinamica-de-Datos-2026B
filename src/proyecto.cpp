@@ -57,3 +57,16 @@ struct CustomQueue {
 
     bool isEmpty() { return front == nullptr; }
 };
+
+// ==========================================
+// 2. FUNCIONES DE UTILIDAD
+// ==========================================
+
+bool parseBool(string s) {
+    return (s == "true" || s == "1");
+}
+
+char parseGender(string s) {
+    if (s == "Female") return 'M'; // Mujer
+    return 'H'; // Hombre por defecto para Male u otros
+}
