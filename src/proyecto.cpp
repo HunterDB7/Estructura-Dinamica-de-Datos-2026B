@@ -4,9 +4,7 @@
 
 using namespace std;
 
-// ==========================================
-// 1. ESTRUCTURAS DE DATOS
-// ==========================================
+// estructuras de datos
 
 struct Node {
     string id;
@@ -58,9 +56,7 @@ struct CustomQueue {
     bool isEmpty() { return front == nullptr; }
 };
 
-// ==========================================
-// 2. FUNCIONES DE UTILIDAD
-// ==========================================
+//funciones de utilidad para parsear datos del CSV
 
 bool parseBool(string s) {
     return (s == "true" || s == "1");
@@ -70,9 +66,8 @@ char parseGender(string s) {
     if (s == "Female") return 'M'; // Mujer
     return 'H'; // Hombre por defecto para Male u otros
 }
-// ==========================================
-// 3. OPERACIONES DEL ÁRBOL
-// ==========================================
+
+//operaciones de busqueda y modificacion de nodos
 
 // Busca un nodo por su ID
 Node* findNode(Node* root, string target_id) {
@@ -121,9 +116,7 @@ void insertNode(Node*& root, Node* newNode) {
 }
 
 
-// ==========================================
-// 4. LÓGICA DE SUCESIÓN 
-// ==========================================
+//Logica de sucesion y reglas de reemplazo del jefe
 
 // Muestra la línea de sucesión (solo para los vivos)
 void showSuccessionLine(Node* root) {
@@ -164,7 +157,7 @@ void triggerSuccession(Node* root, Node*& current_boss) {
     // Buscar primer sucesor vivo y libre
     Node* new_boss = findNextBoss(root, false);
     
-    // Si no hay nadie libre, buscar a los que están en la cárcel
+    // Si no hay nadie libre, buscar a los que estan en la cárcel
     if (!new_boss) {
         cout << "[!] No hay sucesores libres. Buscando en prisiones...\n";
         new_boss = findNextBoss(root, true);
@@ -181,9 +174,7 @@ void triggerSuccession(Node* root, Node*& current_boss) {
 }
 
 
-// ==========================================
-// 5. MANEJO DE DATOS
-// ==========================================
+// Manejo de datos de un nodo específico
 
 void readCSV(string filename, Node*& root, Node*& current_boss) {
     ifstream file(filename);
@@ -257,9 +248,7 @@ void modifyNodeData(Node* root, Node*& current_boss) {
     }
 }
 
-// ==========================================
-// 6. MAIN
-// ==========================================
+//Main 
 
 int main() {
     Node* root = nullptr;
