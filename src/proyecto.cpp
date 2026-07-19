@@ -179,3 +179,80 @@ void triggerSuccession(Node* root, Node*& current_boss) {
         current_boss = nullptr;
     }
 }
+
+
+// ==========================================
+// 5. MANEJO DE DATOS
+// ==========================================
+
+void readCSV(string filename, Node*& root, Node*& current_boss) {
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cout << "Error: No se encontro el archivo " << filename << ". Verifica la carpeta bin.\n";
+        return;
+    }
+
+    string line;
+    getline(file, line); 
+
+    while (getline(file, line)) {
+        if(line.empty()) continue;
+
+        string fields[10];
+        int idx = 0;
+        string current = "";
+        
+        // Parseo manual 
+        for (char c : line) {
+            if (c == ',' && idx < 10) {
+                fields[idx++] = current;
+                current = "";
+            } else {
+                current += c;
+            }
+        }
+        if (idx < 10) fields[idx] = current;
+
+        Node* n = new Node{
+            fields[0], fields[1], fields[2], parseGender(fields[3]), stoi(fields[4]),
+            fields[5], parseBool(fields[6]), parseBool(fields[7]), parseBool(fields[8]), parseBool(fields[9]),
+            nullptr, nullptr
+        };
+
+        if (n->is_boss && !current_boss) {
+            current_boss = n;
+        }
+
+        insertNode(root, n);
+    }
+    file.close();
+    cout << "Datos cargados correctamente.\n";
+}
+
+void modifyNodeData(Node* root, Node*& current_boss) {
+    string search_id;
+    cout << "Ingresa el ID del nodo a modificar: ";
+    cin >> search_id;
+
+    Node* target = findNode(root, search_id);
+    if (!target) {
+        cout << "Nodo no encontrado.\n";
+        return;
+    }
+
+    cout << "\nEditando a " << target->name << " " << target->last_name << "\n";
+    cout << "Nuevo Nombre: "; cin >> target->name;
+    cout << "Nuevo Apellido: "; cin >> target->last_name;
+    cout << "Nuevo Genero (H/M): "; cin >> target->gender;
+    cout << "Nueva Edad: "; cin >> target->age;
+    cout << "Esta muerto? (1=Si, 0=No): "; cin >> target->is_dead;
+    cout << "Esta en prision? (1=Si, 0=No): "; cin >> target->in_jail;
+
+  // Si el editado es el jefe, verificar las reglas 3 y 4 de destitución automática
+    if (target == current_boss) {
+       
+        if (target->is_dead || target->in_jail || target->age > 70) {
+            triggerSuccession(root, current_boss);
+        }
+    }
+}
