@@ -256,3 +256,26 @@ void modifyNodeData(Node* root, Node*& current_boss) {
         }
     }
 }
+
+// ==========================================
+// 6. MAIN
+// ==========================================
+
+int main() {
+    Node* root = nullptr;
+    Node* current_boss = nullptr;
+
+    readCSV("BOSS.csv", root, current_boss);
+
+    int option = 0;
+    while (option != 4) {
+        cout << "\n=== PANEL DE LA FAMILIA ===\n";
+        if (current_boss) cout << "Jefe Actual: " << current_boss->name << " " << current_boss->last_name << "\n";
+        else cout << "Jefe Actual: NINGUNO\n";
+        
+        cout << "1. Mostrar linea de sucesion (Solo vivos)\n";
+        cout << "2. Cambiar datos de un miembro\n";
+        cout << "3. Forzar verificacion de sucesion (Por si hay errores)\n";
+        cout << "4. Salir\n";
+        cout << "Selecciona: ";
+        cin >> option;
