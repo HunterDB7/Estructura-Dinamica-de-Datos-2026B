@@ -279,3 +279,30 @@ int main() {
         cout << "4. Salir\n";
         cout << "Selecciona: ";
         cin >> option;
+
+         switch(option) {
+            case 1:
+                cout << "\n--- LINEA DE SUCESION ---\n";
+                showSuccessionLine(root);
+                break;
+            case 2:
+                modifyNodeData(root, current_boss);
+                break;
+           case 3:
+                // Agregamos los operadores || (OR) para separar las tres condiciones
+                if (current_boss && (current_boss->is_dead || current_boss->in_jail || current_boss->age > 70)) {
+                    triggerSuccession(root, current_boss);
+                } else {
+                    cout << "\nEl jefe actual esta en condiciones para seguir liderando.\n";
+                }
+                break;
+            case 4:
+                cout << "Cerrando sistema de la familia...\n";
+                break;
+            default:
+                cout << "Opcion no valida.\n";
+        }
+    }
+
+    return 0;
+}
