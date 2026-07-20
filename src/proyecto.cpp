@@ -22,7 +22,7 @@ struct Node {
     Node* right;
 };
 
-// Cola personalizada para no usar std::vector ni std::queue (Regla del proyecto)
+// Cola personalizada 
 struct QueueNode {
     Node* treeNode;
     QueueNode* next;
@@ -78,7 +78,7 @@ Node* findNode(Node* root, string target_id) {
     return findNode(root->right, target_id);
 }
 
-// Inserción en el árbol: Busca al jefe, si no lo encuentra o ya tiene 2 hijos, inserta por nivel.
+// Inserción en el árbol: Busca al jefe, si no lo encuentra o ya tiene 2 hijos, inserta por nivel
 void insertNode(Node*& root, Node* newNode) {
     if (!root) {
         root = newNode;
@@ -134,7 +134,7 @@ void showSuccessionLine(Node* root) {
 Node* findNextBoss(Node* root, bool allow_jail) {
     if (!root) return nullptr;
     
-    // Si está vivo, y no es el jefe actual (a menos que estemos buscando reemplazo general) y cumple la condición de libertad.
+    // Si está vivo, y no es el jefe actual (a menos que estemos buscando reemplazo general) y cumple la condición de libertad
     if (!root->is_dead && !root->is_boss) {
         if (allow_jail || !root->in_jail) {
             return root;
